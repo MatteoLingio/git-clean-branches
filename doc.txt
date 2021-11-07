@@ -1,0 +1,17 @@
+Purpose of the program:
+create a cli program that delete old useless git branches
+
+Name: git-clean-branches
+
+Minimal workflow:
+launch the command gcb inside a repo
+a list of all branches is shown except for master and develop if present
+if the user presses d all branches are deleted 
+if tne user presses q the program quit
+
+Features to add:
+        -Branch selection
+        -Add options to command gcd, for example -A to delete all branches included develop
+
+Libraries to use:
+-git2
