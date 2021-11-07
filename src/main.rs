@@ -23,9 +23,9 @@ fn main() -> std::io::Result<()>{
         let (branch, _) = b.unwrap();
         let commit = branch.get().peel_to_commit().unwrap();
         let sum = commit.summary().unwrap();
-        println!("summary {}", &sum);
         match branch.name() {
             Ok(name) => {
+                println!("branch: {} {}",name.unwrap(), &sum);
                 if name != Some("develop") && name != Some("master") && name != Some("main"){
                     println!("{}", name.unwrap());
                 }
