@@ -1,5 +1,5 @@
 [package]
-name = "git-branch-delete"
+name = "git-clean-branches"
 version = "0.1.0"
 edition = "2018"
 
