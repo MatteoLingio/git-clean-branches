@@ -25,7 +25,6 @@ fn main() -> std::io::Result<()>{
 fn get_user_action(mut user_input: String, mut branch: Branch) {
     //Bug every keystroke goes inside
     user_input.pop();
-    println!("{:?}", user_input);
     match &user_input[..]{
         "d" => {
             match branch.delete() {
