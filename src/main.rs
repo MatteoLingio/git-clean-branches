@@ -32,7 +32,11 @@ fn get_user_action(mut user_input: String, mut branch: Branch) {
             }
         }
         "s" => {
+            //skip
            return; 
+        }
+        "q" => {
+            std::process::exit(0)
         }
         _ => println!("unknown command")
     }
