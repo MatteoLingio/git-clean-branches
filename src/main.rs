@@ -1,4 +1,4 @@
-use std::{env};
+use std::{env, io::stdin};
 use git2::{BranchType, Oid, Repository};
 use chrono::{NaiveDateTime, Duration};
 fn main() -> std::io::Result<()>{
@@ -15,11 +15,23 @@ fn main() -> std::io::Result<()>{
 
     for b in branches {
         println!("branch {:?} - last commit {} - at {}", b.name, b.last_commit_id, b.time);
+        let mut buffer = String::new();
+        stdin().read_line(&mut buffer)?;
+        get_user_action(buffer, b);
     }
     Ok(())
 }
 
-//creates a Vector of Branch with the corerct informations with main/master filtered out
+fn get_user_action(user_input: String, mut branch: Branch) {
+    let d = String::from("d");
+    match user_input {
+        d => {
+            branch.delete();
+        }
+    }
+}
+
+//creates a Vector of Branch with the correct informations with main/master filtered out
 //The vector is sorted by oldest commit
 fn get_branches(repo: &Repository) -> Result<Vec<Branch>, git2::Error> {
 
@@ -42,7 +54,7 @@ fn get_branches(repo: &Repository) -> Result<Vec<Branch>, git2::Error> {
         .filter(|branch| {
             return match branch {
                 Ok(branch) => {
-                    branch.name != "master" && branch.name != "main"
+                    branch.name != "master" && branch.name != "main" && branch.name != "develop"
                 },
                 Err(e) => panic!("Error {}", e)
             };
@@ -56,7 +68,13 @@ fn get_branches(repo: &Repository) -> Result<Vec<Branch>, git2::Error> {
 
 struct Branch<'repo> {
     name: String,
-    branch: git2::Branch<'repo>,
     time: NaiveDateTime,
-    last_commit_id: Oid
+    last_commit_id: Oid,
+    branch: git2::Branch<'repo>,
+}
+
+impl<'repo> Branch<'repo> {
+    fn delete(&mut self) -> Result<(), git2::Error>{
+        self.branch.delete().map_err(From::from)
+    }
 }
