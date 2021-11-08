@@ -7,3 +7,4 @@ edition = "2018"
 
 [dependencies]
 git2 = "0.13.23"
+chrono = "0.4"
