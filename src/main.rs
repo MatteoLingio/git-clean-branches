@@ -22,12 +22,15 @@ fn main() -> std::io::Result<()>{
     Ok(())
 }
 
-fn get_user_action(user_input: String, mut branch: Branch) {
-    let d = String::from("d");
-    match user_input {
-        d => {
+fn get_user_action(mut user_input: String, mut branch: Branch) {
+    //Bug every keystroke goes inside
+    user_input.pop();
+    println!("{:?}", user_input);
+    match &user_input[..]{
+        "d" => {
             branch.delete();
         }
+        _ => println!("nothing")
     }
 }
 
