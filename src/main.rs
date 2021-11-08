@@ -4,7 +4,6 @@ use chrono::{NaiveDateTime, Duration};
 fn main() -> std::io::Result<()>{
     let path_buf = env::current_dir()?;
     let path = path_buf.as_path(); 
-    println!("This is the current directory {:?}", &path);
     //Try to open the repository
     let repo = match Repository::open(path)  {
        Ok(repo) => repo,
@@ -23,16 +22,19 @@ fn main() -> std::io::Result<()>{
 }
 
 fn get_user_action(mut user_input: String, mut branch: Branch) {
-    //Bug every keystroke goes inside
+    //Strip /n
     user_input.pop();
     match &user_input[..]{
         "d" => {
             match branch.delete() {
-                Ok(b) => println!("branch deleted"),
+                Ok(_) => println!("branch deleted"),
                 Err(e) => println!("Cannot delete {}", e)
             }
         }
-        _ => println!("nothing")
+        "s" => {
+           return; 
+        }
+        _ => println!("unknown command")
     }
 }
 
