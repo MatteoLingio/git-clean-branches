@@ -28,7 +28,10 @@ fn get_user_action(mut user_input: String, mut branch: Branch) {
     println!("{:?}", user_input);
     match &user_input[..]{
         "d" => {
-            branch.delete();
+            match branch.delete() {
+                Ok(b) => println!("branch deleted"),
+                Err(e) => println!("Cannot delete {}", e)
+            }
         }
         _ => println!("nothing")
     }
